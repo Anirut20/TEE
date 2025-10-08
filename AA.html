@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สื่อการสอน: ไดโอด (Diode)</title>
+    
+    <!-- Script for LaTeX Math Formulas -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Sarabun', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background-color: #f4f7f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3, h4 {
+            color: #0d47a1; /* Dark Blue */
+        }
+        section {
+            background-color: #ffffff;
+            margin-bottom: 25px;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            scroll-margin-top: 80px;
+        }
+        hr {
+            border: 0;
+            height: 1px;
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
+        }
+
+        /* Header */
+        .header {
+            background-color: #1565c0; /* Bright Blue */
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .header h1 {
+            color: white;
+            margin: 0;
+        }
+        
+        /* Navigation Bar */
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .navbar a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            transition: background-color: 0.3s;
+        }
+        .navbar a:hover {
+            background-color: #555;
+        }
+
+        /* Content Specific */
+        .definition-box {
+            background-color: #e3f2fd;
+            border-left: 6px solid #1976d2;
+            padding: 10px 20px;
+            margin: 20px 0;
+        }
+        .formula-display {
+            text-align: center;
+            font-size: 1.5em; 
+            font-weight: bold;
+            color: #d32f2f; /* Red */
+            padding: 20px;
+            background-color: #fff3e0;
+            border-radius: 8px;
+        }
+        
+        /* Calculator */
+        .calculator-box {
+            background-color: #F5EFE6;
+            border: 1px solid #D7C0AE;
+            border-radius: 8px;
+            padding: 25px;
+        }
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .input-group input { width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc; box-sizing: border-box; }
+        .calculator-box button { background-color: #8B4513; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; }
+        .calculator-box button.clear-btn { background-color: #A0522D; }
+        #result_diode { margin-top: 15px; padding: 10px; border-radius: 5px; font-size: 1.2em; text-align: center; display: none; }
+        #result_diode.success { background-color: #D4EDDA; color: #155724; }
+        #result_diode.error { background-color: #F8D7DA; color: #721C24; }
+
+        /* Quiz Section */
+        .quiz-interaction { margin-top: 20px; padding: 15px; background-color: #f5f5f5; border-radius: 5px; }
+        .quiz-interaction label { font-weight: bold; margin-right: 10px; }
+        .quiz-interaction input { padding: 8px; width: 100px; border: 1px solid #ccc; border-radius: 4px; }
+        .quiz-interaction button { background-color: #007bff; color: white; padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; margin-left: 10px; }
+        .feedback { margin-top: 10px; font-weight: bold; padding: 10px; border-radius: 5px; }
+        .feedback.incorrect { color: #721c24; background-color: #f8d7da; }
+        .solution { display: none; margin-top: 15px; background-color: #e9ecef; padding: 15px; border-left: 5px solid #17a2b8; }
+        
+        /* Footer */
+        .footer { text-align: center; padding: 20px; color: #777; }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <h1>สื่อการสอน: ไดโอด (Diode)</h1>
+    </header>
+
+    <nav class="navbar">
+        <a href="#diode-section1">1. ความหมาย</a>
+        <a href="#diode-section2">2. หลักการทำงาน</a>
+        <a href="#diode-section3">3. คุณลักษณะ</a>
+        <a href="#diode-section4">4. โจทย์ตัวอย่าง</a>
+        <a href="#diode-section5">5. เครื่องมือตรวจสอบ</a>
+    </nav>
+    <div class="container">
+        <section id="diode-section1">
+            <h2>1. ความหมายของไดโอด</h2>
+            <div class="definition-box"><p><strong>ไดโอด (Diode)</strong> คือ อุปกรณ์สารกึ่งตัวนำชนิดหนึ่งที่ทำหน้าที่สำคัญในการบังคับทิศทางการไหลของกระแสไฟฟ้าให้ไหลไปในทิศทางเดียว และป้องกันไม่ให้กระแสไฟฟ้าไหลย้อนกลับ เปรียบเสมือน "วาล์วน้ำกันกลับ" ในทางไฟฟ้า</p></div>
+            <p>ไดโอดมีขั้ว 2 ขั้ว คือ <strong>แอโนด (Anode, A)</strong> ซึ่งเป็นขั้วบวก และ <strong>แคโทด (Cathode, K)</strong> ซึ่งเป็นขั้วลบ โดยสัญลักษณ์ของไดโอดจะใช้ลูกศรเพื่อชี้ทิศทางที่กระแสไฟฟ้าสามารถไหลผ่านได้ (จาก A ไป K)</p>
+            
+        </section>
+        <section id="diode-section2">
+            <h2>2. หลักการทำงาน</h2>
+            <p>การทำงานของไดโอดจะขึ้นอยู่กับวิธีการจ่ายแรงดันไฟฟ้าให้กับขั้วทั้งสอง ซึ่งเรียกว่า "การไบอัส" (Biasing) แบ่งเป็น 2 สภาวะหลัก:</p>
+            <ul>
+                <li><strong>การไบอัสตรง (Forward Bias):</strong> คือการจ่ายแรงดันไฟฟ้าบวกเข้าที่ขั้วแอโนด (A) และจ่ายแรงดันลบเข้าที่ขั้วแคโทด (K) ในสภาวะนี้ ไดโอดจะอยู่ในสภาพ "เปิด" และยอมให้กระแสไฟฟ้าไหลผ่านได้ โดยจะมีแรงดันตกคร่อมตัวมันเล็กน้อย (ประมาณ 0.7V สำหรับไดโอดชนิดซิลิคอน)</li>
+                <li><strong>การไบอัสกลับ (Reverse Bias):</strong> คือการจ่ายแรงดันไฟฟ้าลบเข้าที่ขั้วแอโนด (A) และจ่ายแรงดันบวกเข้าที่ขั้วแคโทด (K) ในสภาวะนี้ ไดโอดจะอยู่ในสภาพ "ปิด" และไม่ยอมให้กระแสไฟฟ้าไหลผ่าน (ในทางอุดมคติ)</li>
+            </ul>
+            
+        </section>
+        <section id="diode-section3">
+            <h2>3. คุณลักษณะและแบบจำลอง</h2>
+            <p>ในการวิเคราะห์วงจร เรามักจะใช้แบบจำลองของไดโอดเพื่อทำให้การคำนวณง่ายขึ้น:</p>
+            <p><strong>1. แบบจำลองอุดมคติ (Ideal Diode Model):</strong></p>
+             <div class="formula-display">
+                 <p>ไบอัสตรง: ทำหน้าที่เหมือนสวิตช์ปิด (Short Circuit), Vd = 0V</p>
+                 <p>ไบอัสกลับ: ทำหน้าที่เหมือนสวิตช์เปิด (Open Circuit), Id = 0A</p>
+            </div>
+            <p><strong>2. แบบจำลองแรงดันคงที่ (Constant Voltage Drop Model):</strong> เป็นแบบจำลองที่นิยมใช้และใกล้เคียงความจริงมากขึ้น</p>
+             <div class="formula-display">
+                <p>ไบอัสตรง: ทำหน้าที่เหมือนแหล่งจ่ายไฟขนาดเล็ก, Vd ≈ 0.7V (สำหรับไดโอดซิลิคอน)</p>
+                <p>ไบอัสกลับ: ทำหน้าที่เหมือนสวิตช์เปิด, Id = 0A</p>
+            </div>
+        </section>
+         <section id="diode-section4">
+            <h2>4. โจทย์ตัวอย่าง</h2>
+            <h3>โจทย์ข้อที่ 1</h3>
+            <p><strong>คำถาม:</strong> จากวงจรด้านล่าง หากแหล่งจ่ายไฟ (Vs) คือ 10V และตัวต้านทาน (R) คือ 1k โอห์ม จงหากระแสไฟฟ้าที่ไหลผ่านวงจร (ใช้แบบจำลองแรงดันคงที่ Vd = 0.7V)</p>
+            
+            <div class="quiz-interaction">
+                <label for="diode_answer1">ใส่คำตอบของคุณ (mA):</label>
+                <input type="number" id="diode_answer1" placeholder="ตอบเป็นตัวเลข" step="any"><button onclick="checkAnswerDiode(1, 9.3)">ตรวจคำตอบ</button>
+                <div class="feedback" id="diode_feedback1"></div>
+            </div>
+            <div class="solution" id="diode_solution1">
+                <h4>เฉลย</h4>
+                <p><strong>วิธีทำ:</strong> 1. ไดโอดได้รับการไบอัสตรง จึงนำกระแส และมีแรงดันตกคร่อม 0.7V</p>
+                <p>2. หาแรงดันที่ตกคร่อมตัวต้านทาน: VR = Vs - Vd = 10V - 0.7V = 9.3V</p>
+                <p>3. หากระแสจากกฎของโอห์ม: I = VR / R = 9.3V / 1000Ω = 0.0093A</p>
+                <p>4. แปลงหน่วยเป็น mA: 0.0093A = 9.3mA</p>
+                <p><strong>คำตอบที่ถูกต้อง:</strong> <strong>9.3mA</strong></p>
+            </div>
+            <hr>
+            <h3>โจทย์ข้อที่ 2</h3>
+            <p><strong>คำถาม:</strong> จากวงจรเดิม แต่กลับทิศทางของไดโอดดังภาพ จะมีกระแสไฟฟ้าไหลผ่านวงจรเท่าใด</p>
+             
+            <div class="quiz-interaction">
+                <label for="diode_answer2">ใส่คำตอบของคุณ (A):</label>
+                <input type="number" id="diode_answer2" placeholder="ตอบเป็นตัวเลข" step="any"><button onclick="checkAnswerDiode(2, 0)">ตรวจคำตอบ</button>
+                <div class="feedback" id="diode_feedback2"></div>
+            </div>
+            <div class="solution" id="diode_solution2">
+                <h4>เฉลย</h4>
+                <p><strong>วิธีทำ:</strong> ไดโอดได้รับการไบอัสกลับ จึงทำหน้าที่เหมือนสวิตช์เปิด วงจรจึงขาดและไม่มีกระแสไฟฟ้าไหล</p>
+                <p><strong>คำตอบที่ถูกต้อง:</strong> <strong>0A</strong></p>
+            </div>
+        </section>
+        <section id="diode-section5">
+            <h2>5. เครื่องมือตรวจสอบการไบอัส</h2>
+            <div class="calculator-box">
+                <p>ป้อนค่าแรงดันที่ขั้วแอโนดและแคโทดเพื่อตรวจสอบสภาวะของไดโอด</p>
+                <div class="input-group"><label for="anode_v">แรงดันที่แอโนด (Va)</label><input type="number" id="anode_v"></div>
+                <div class="input-group"><label for="cathode_v">แรงดันที่แคโทด (Vk)</label><input type="number" id="cathode_v"></div>
+                <button onclick="checkDiodeBias()">ตรวจสอบ</button><button class="clear-btn" onclick="clearDiodeInputs()">ล้างค่า</button>
+                <div id="result_diode"></div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>จัดทำโดย [ชื่อของคุณ/สถาบัน]</p>
+    </footer>
+
+    <script>
+        function checkDiodeBias() {
+            const va = parseFloat(document.getElementById('anode_v').value);
+            const vk = parseFloat(document.getElementById('cathode_v').value);
+            const resultDiv = document.getElementById('result_diode');
+
+            if (isNaN(va) || isNaN(vk)) {
+                resultDiv.className = 'error';
+                resultDiv.innerHTML = '<strong>โปรดป้อนข้อมูลให้ครบทั้งสองช่อง</strong>';
+                resultDiv.style.display = 'block';
+                return;
+            }
+            
+            // Using Practical Model Vd > 0.7V for clear conduction
+            if (va > vk && (va - vk) >= 0.7) {
+                resultDiv.className = 'success';
+                resultDiv.innerHTML = `<strong>ไบอัสตรง (Forward Biased) - นำกระแส</strong><br><small>Vd = ${(va - vk).toFixed(2)}V</small>`;
+            } else {
+                 resultDiv.className = 'error';
+                resultDiv.innerHTML = `<strong>ไบอัสกลับ (Reverse Biased) - ไม่นำกระแส</strong><br><small>Vd = ${(va - vk).toFixed(2)}V</small>`;
+            }
+             resultDiv.style.display = 'block';
+        }
+
+        function clearDiodeInputs() {
+            document.getElementById('anode_v').value = '';
+            document.getElementById('cathode_v').value = '';
+            document.getElementById('result_diode').style.display = 'none';
+        }
+
+        function checkAnswerDiode(problemNum, correctAns) {
+             const userAnswer = parseFloat(document.getElementById(`diode_answer${problemNum}`).value);
+            const feedbackDiv = document.getElementById(`diode_feedback${problemNum}`);
+            const solutionDiv = document.getElementById(`diode_solution${problemNum}`);
+            
+            feedbackDiv.style.display = 'block';
+            if (isNaN(userAnswer)) {
+                feedbackDiv.className = 'feedback incorrect';
+                feedbackDiv.textContent = 'โปรดป้อนคำตอบเป็นตัวเลข';
+                solutionDiv.style.display = 'none';
+                return;
+            }
+            if (Math.abs(userAnswer - correctAns) > 0.01) { 
+                feedbackDiv.className = 'feedback incorrect';
+                feedbackDiv.textContent = 'คุณตอบผิด';
+            } else {
+                feedbackDiv.style.display = 'none';
+            }
+            solutionDiv.style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>
+
